@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Web Developer & Creative Professional</title>
+  <meta name="description" content="Personal portfolio of a web developer and creative professional. Explore projects, skills, and get in touch." />
+
+  <!-- Tailwind CSS v4 Play CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Alpine.js Intersect Plugin + Alpine Core -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Custom Tailwind Theme -->
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #0a0a0f;
+      --color-surface: #12121a;
+      --color-surface-light: #1a1a2e;
+      --color-accent: #6366f1;
+      --color-accent-glow: #818cf8;
+      --color-cyan: #22d3ee;
+      --color-text-primary: #f1f5f9;
+      --color-text-secondary: #94a3b8;
+      --color-border: #1e1e30;
+      --font-sans: 'Inter', sans-serif;
+    }
+  </style>
+
+  <style>
+    /* Smooth scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0f; }
+    ::-webkit-scrollbar-thumb { background: #1a1a2e; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+    /* Hero floating shapes */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(5deg); }
+      66% { transform: translateY(10px) rotate(-3deg); }
+    }
+    @keyframes float-delay {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(15px) rotate(-4deg); }
+      66% { transform: translateY(-25px) rotate(6deg); }
+    }
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(8deg); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-delay { animation: float-delay 8s ease-in-out infinite; }
+    .animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
+
+    /* Gradient text animation */
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient-shift 4s ease infinite;
+    }
+
+    /* Stagger entrance animations */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+      animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Pulse glow for CTA */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
+    }
+    .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+    /* Line draw animation */
+    @keyframes line-draw {
+      from { width: 0; }
+      to { width: 60px; }
+    }
+    .animate-line {
+      animation: line-draw 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-bg font-sans text-text-primary antialiased" x-data="{ mobileOpen: false }">
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-border/50 backdrop-blur-xl bg-bg/70 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="text-xl font-bold tracking-tight group">
+        <span class="text-accent group-hover:text-accent-glow transition-colors duration-300">&lt;</span>
+        <span class="text-text-primary">Dev</span>
+        <span class="text-accent group-hover:text-accent-glow transition-colors duration-300">/&gt;</span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#about" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full">About</a></li>
+        <li><a href="#skills" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full">Skills</a></li>
+        <li><a href="#projects" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full">Projects</a></li>
+        <li><a href="#contact" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-accent after:transition-all after:duration-300 hover:after:w-full">Contact</a></li>
+        <li>
+          <a href="#contact" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-accent hover:bg-accent-glow rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-accent/25">
+            Hire Me
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mobile hamburger -->
+      <button @click="mobileOpen = !mobileOpen" class="md:hidden flex flex-col gap-1.5 p-2 group" aria-label="Toggle menu">
+        <span class="w-6 h-0.5 bg-text-secondary group-hover:bg-accent transition-all duration-300" :class="mobileOpen ? 'rotate-45 translate-y-2' : ''"></span>
+        <span class="w-6 h-0.5 bg-text-secondary group-hover:bg-accent transition-all duration-300" :class="mobileOpen ? 'opacity-0' : ''"></span>
+        <span class="w-4 h-0.5 bg-text-secondary group-hover:bg-accent transition-all duration-300" :class="mobileOpen ? '-rotate-45 -translate-y-2 w-6' : ''"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu dropdown -->
+    <div x-show="mobileOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" @click.outside="mobileOpen = false" class="md:hidden border-t border-border/50 bg-surface/95 backdrop-blur-xl">
+      <ul class="flex flex-col p-6 gap-4">
+        <li><a href="#about" @click="mobileOpen = false" class="block text-text-secondary hover:text-accent transition-colors duration-300">About</a></li>
+        <li><a href="#skills" @click="mobileOpen = false" class="block text-text-secondary hover:text-accent transition-colors duration-300">Skills</a></li>
+        <li><a href="#projects" @click="mobileOpen = false" class="block text-text-secondary hover:text-accent transition-colors duration-300">Projects</a></li>
+        <li><a href="#contact" @click="mobileOpen = false" class="block text-text-secondary hover:text-accent transition-colors duration-300">Contact</a></li>
+        <li><a href="#contact" @click="mobileOpen = false" class="inline-flex items-center justify-center w-full px-4 py-2.5 text-sm font-medium text-white bg-accent hover:bg-accent-glow rounded-lg transition-all duration-300">Hire Me</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ========== HERO SECTION ========== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
+    <!-- Floating geometric shapes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="animate-float absolute top-[15%] left-[10%] w-20 h-20 border border-accent/10 rounded-2xl rotate-12"></div>
+      <div class="animate-float-delay absolute top-[25%] right-[15%] w-14 h-14 border border-cyan/10 rounded-full"></div>
+      <div class="animate-float-slow absolute bottom-[30%] left-[20%] w-28 h-28 border border-accent/5 rounded-3xl -rotate-12"></div>
+      <div class="animate-float absolute bottom-[20%] right-[10%] w-16 h-16 border border-cyan/8 rounded-xl rotate-45"></div>
+      <div class="animate-float-delay absolute top-[50%] left-[50%] w-10 h-10 border border-accent/8 rounded-lg rotate-12"></div>
+      <!-- Radial gradient background glow -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px]"></div>
+      <div class="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-cyan/3 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="relative z-10 text-center max-w-4xl" x-data="{ shown: false }" x-init="setTimeout(() => shown = true, 100)">
+      <!-- Greeting tag -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-border bg-surface/50 text-sm text-text-secondary" x-show="shown" x-transition:enter="transition ease-out duration-500 delay-100" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+        Available for new projects
+      </div>
+
+      <!-- Main heading -->
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tight mb-6" x-show="shown" x-transition:enter="transition ease-out duration-700 delay-300" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        Hi, I'm
+        <span class="bg-gradient-to-r from-accent via-cyan to-accent bg-clip-text text-transparent animate-gradient">
+         Wesson Enriquez
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-lg sm:text-xl md:text-2xl text-text-secondary font-light max-w-2xl mx-auto mb-10 leading-relaxed" x-show="shown" x-transition:enter="transition ease-out duration-700 delay-500" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        A <span class="text-text-primary font-medium">front-end developer</span> crafting
+        <span class="text-cyan">beautiful</span>, <span class="text-accent-glow">performant</span>,
+        and <span class="text-text-primary font-medium">user-centric</span> digital experiences.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4" x-show="shown" x-transition:enter="transition ease-out duration-700 delay-700" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        <a href="#projects" class="inline-flex items-center gap-2 px-8 py-3.5 text-white font-semibold bg-accent hover:bg-accent-glow rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5 animate-pulse-glow">
+          <span>View My Work</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 px-8 py-3.5 text-text-primary font-semibold border border-border hover:border-accent/50 rounded-xl transition-all duration-300 hover:bg-surface-light/50 hover:-translate-y-0.5">
+          <span>Get in Touch</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========== ABOUT SECTION ========== -->
+  <section id="about" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center" x-data="{ shown: false }" x-intersect:enter.once="shown = true">
+
+        <!-- Avatar / Visual -->
+        <div class="relative flex justify-center" x-show="shown" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 -translate-x-8" x-transition:enter-end="opacity-100 translate-x-0">
+          <div class="relative">
+            <div class="w-64 h-64 sm:w-72 sm:h-72 rounded-2xl bg-gradient-to-br from-accent/20 to-cyan/10 p-1">
+              <div class="w-full h-full rounded-2xl bg-surface overflow-hidden">
+                <img src="https://res.cloudinary.com/dbhhps3yb/image/upload/v1772159031/1735474830141_al2kq5.jpg" alt="Profile photo" class="w-full h-full object-cover" />
+              </div>
+            </div>
+            <!-- Decorative accents -->
+            <div class="absolute -top-4 -right-4 w-20 h-20 border border-accent/20 rounded-xl rotate-12"></div>
+            <div class="absolute -bottom-4 -left-4 w-16 h-16 border border-cyan/15 rounded-lg -rotate-6"></div>
+            <div class="absolute top-1/2 -right-8 w-3 h-3 bg-accent rounded-full"></div>
+          </div>
+        </div>
+
+        <!-- About text -->
+        <div x-show="shown" x-transition:enter="transition ease-out duration-700 delay-200" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0">
+          <!-- Section Label -->
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-[2px] bg-accent animate-line"></div>
+            <span class="text-accent text-sm font-semibold tracking-widest uppercase">About Me</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Turning ideas into<br />
+            <span class="text-text-secondary">digital reality</span>
+          </h2>
+          <p class="text-text-secondary leading-relaxed mb-6">
+            I'm a passionate front-end developer with 5+ years of experience building modern web applications. I specialize in creating elegant solutions that balance beautiful design with high performance and accessibility.
+          </p>
+          <p class="text-text-secondary leading-relaxed mb-8">
+            When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I believe great software is born at the intersection of empathy and craftsmanship.
+          </p>
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6">
+            <div class="text-center sm:text-left">
+              <div class="text-3xl font-bold text-accent">7+</div>
+              <div class="text-sm text-text-secondary mt-1">Years Exp.</div>
+            </div>
+            <div class="text-center sm:text-left">
+              <div class="text-3xl font-bold text-cyan">50+</div>
+              <div class="text-sm text-text-secondary mt-1">Projects</div>
+            </div>
+            <div class="text-center sm:text-left">
+              <div class="text-3xl font-bold text-accent-glow">30+</div>
+              <div class="text-sm text-text-secondary mt-1">Happy Clients</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== SKILLS SECTION ========== -->
+  <section id="skills" class="relative py-24 md:py-32 px-6 bg-surface/30">
+    <!-- Background texture -->
+    <div class="absolute inset-0 pointer-events-none opacity-30">
+      <div class="absolute top-0 left-1/4 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 right-1/4 w-[300px] h-[300px] bg-cyan/3 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto relative z-10" x-data="{ shown: false }" x-intersect:enter.once="shown = true">
+      <!-- Section header -->
+      <div class="text-center mb-16" x-show="shown" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-[2px] bg-accent"></div>
+          <span class="text-accent text-sm font-semibold tracking-widest uppercase">Skills &amp; Tools</span>
+          <div class="w-10 h-[2px] bg-accent"></div>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">My Tech Stack</h2>
+        <p class="text-text-secondary max-w-xl mx-auto">Technologies and tools I use to design, build, and automate modern web experiences.</p>
+      </div>
+
+      <!-- Skills group -->
+      <div class="mb-8" x-show="shown" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+        <h3 class="text-sm font-semibold text-text-secondary tracking-widest uppercase mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-accent rounded-full"></span> Skills
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6 mb-14">
+        <template x-for="(skill, index) in [
+          { icon: '&#127760;', name: 'HTML / CSS / JS', category: 'Core Web' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/fluency/48/wordpress.png alt=wordpress />', name: 'WordPress', category: 'CMS' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/color/48/webflow.png alt=webflow />', name: 'Webflow / Relume AI', category: 'No-Code / AI' },
+          { icon: '&#9881;&#65039;', name: 'Automation (n8n)', category: 'Workflow' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/fluency/48/supabase.png alt=supabase />', name: 'Supabase', category: 'Backend / DB' },
+          { icon: '&#9729;&#65039;', name: 'Cloudinary', category: 'Media / CDN' }
+        ]" :key="index">
+          <div
+            x-show="shown"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-6"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            :style="'transition-delay: ' + (index * 80) + 'ms'"
+            class="group p-5 md:p-6 rounded-xl border border-border/50 bg-surface/50 backdrop-blur-sm hover:border-accent/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/5 cursor-default"
+          >
+            <div class="h-9 mb-3 text-3xl" x-html="skill.icon"></div>
+            <h3 class="font-semibold text-text-primary group-hover:text-accent transition-colors duration-300" x-text="skill.name"></h3>
+            <p class="text-xs text-text-secondary mt-1" x-text="skill.category"></p>
+          </div>
+        </template>
+      </div>
+
+      <!-- Tools group -->
+      <div class="mb-8" x-show="shown" x-transition:enter="transition ease-out duration-500 delay-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+        <h3 class="text-sm font-semibold text-text-secondary tracking-widest uppercase mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 bg-cyan rounded-full"></span> Tools
+        </h3>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+        <template x-for="(skill, index) in [
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/matisse/100/js.png alt=alpine-js />', name: 'Alpine.js', category: 'JS Framework' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/nolan/64/express-js.png alt=express-js />', name: 'Express.js', category: 'Backend' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/fluency/48/tailwind_css.png alt=tailwind-css />', name: 'Tailwind CSS', category: 'Styling' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/matisse/100/js.png alt=gsap />', name: 'GSAP', category: 'Animation' },
+          { icon: '&#128230;', name: 'Parcel', category: 'Build Tool' },
+          { icon: '<img width=36 height=36 src=https://img.icons8.com/fluency/48/claude-ai.png alt=claude-ai />', name: 'Claude Code / Antigravity', category: 'AI IDE' }
+        ]" :key="index">
+          <div
+            x-show="shown"
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 translate-y-6"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            :style="'transition-delay: ' + ((index + 6) * 80) + 'ms'"
+            class="group p-5 md:p-6 rounded-xl border border-border/50 bg-surface/50 backdrop-blur-sm hover:border-cyan/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan/5 cursor-default"
+          >
+            <div class="h-9 mb-3 text-3xl" x-html="skill.icon"></div>
+            <h3 class="font-semibold text-text-primary group-hover:text-cyan transition-colors duration-300" x-text="skill.name"></h3>
+            <p class="text-xs text-text-secondary mt-1" x-text="skill.category"></p>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== PROJECTS SECTION ========== -->
+  <section id="projects" class="relative py-24 md:py-32 px-6">
+    <div class="max-w-6xl mx-auto" x-data="{ shown: false }" x-intersect:enter.once="shown = true">
+      <!-- Section header -->
+      <div class="text-center mb-16" x-show="shown" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-[2px] bg-accent"></div>
+          <span class="text-accent text-sm font-semibold tracking-widest uppercase">Projects</span>
+          <div class="w-10 h-[2px] bg-accent"></div>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Featured Work</h2>
+        <p class="text-text-secondary max-w-xl mx-auto">A selection of projects I've built — from brand websites to e-commerce platforms and community apps.</p>
+      </div>
+
+      <!-- Projects grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <template x-for="(project, index) in [
+          {
+            title: 'PetMe.PH',
+            description: 'A pet adoption and care platform connecting pet owners and adopters across the Philippines.',
+            tags: ['Tailwind CSS', 'Alpine.js'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169057/petmeph_ccl5ia.png',
+            link: 'https://petphme.vercel.app/'
+          },
+          {
+            title: 'Hidden GemsPH',
+            description: 'A travel discovery platform showcasing hidden tourist destinations in the Philippines with interactive maps.',
+            tags: ['Tailwind CSS', 'Alpine.js', 'Leaflet.js', 'Supabase'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169057/hiddengemsph_ipdcjw.png',
+            link: 'https://hiddengems-ph.vercel.app/'
+          },
+          {
+            title: 'AlpharyaWeb',
+            description: 'A modern business website with clean design, smooth animations, and responsive layouts.',
+            tags: ['Tailwind CSS', 'Alpine.js'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169056/alpharyaweb_npgoje.png',
+            link: 'https://alpharyaweb.vercel.app/'
+          },
+          {
+            title: 'Crosister E-Commerce',
+            description: 'A full-featured e-commerce site with product listings, cart functionality, and email notifications.',
+            tags: ['HTML', 'CSS', 'JavaScript', 'Email.js', 'Firebase'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169057/crosister_wja9de.png',
+            link: 'https://crosister-ph.vercel.app/'
+          },
+          {
+            title: 'Sonrisa',
+            description: 'A vibrant brand website with engaging visuals and a polished user experience.',
+            tags: ['Tailwind CSS', 'Alpine.js'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169057/sonrisa_gaegb5.png',
+            link: 'https://sonrisa-ph.vercel.app/'
+          },
+          {
+            title: 'Tejero Daily News',
+            description: 'A community news portal delivering the latest local stories and updates for Tejero.',
+            tags: ['Tailwind CSS', 'Alpine.js'],
+            image: 'https://res.cloudinary.com/dbhhps3yb/image/upload/v1772169057/tejero_cysckn.png',
+            link: 'https://tejerodailynews-ph.vercel.app/'
+          }
+        ]" :key="index">
+          <div
+            x-show="shown"
+            x-transition:enter="transition ease-out duration-600"
+            x-transition:enter-start="opacity-0 translate-y-8"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            :style="'transition-delay: ' + (index * 120) + 'ms'"
+            class="group relative rounded-2xl border border-border/50 bg-surface/40 backdrop-blur-sm overflow-hidden hover:border-accent/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-accent/10"
+          >
+            <!-- Card top image area -->
+            <div class="relative h-48 overflow-hidden bg-surface">
+              <img :src="project.image" :alt="project.title" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
+              <!-- Overlay on hover -->
+              <div class="absolute inset-0 bg-bg/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center gap-3">
+                <a :href="project.link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 bg-accent hover:bg-accent-glow text-white text-sm font-medium rounded-lg transition-all duration-300 hover:-translate-y-0.5">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  Live Site
+                </a>
+              </div>
+            </div>
+            <!-- Card content -->
+            <div class="p-6">
+              <h3 class="text-lg font-bold mb-2 group-hover:text-accent transition-colors duration-300" x-text="project.title"></h3>
+              <p class="text-text-secondary text-sm leading-relaxed mb-4" x-text="project.description"></p>
+              <div class="flex flex-wrap gap-2">
+                <template x-for="tag in project.tags" :key="tag">
+                  <span class="px-2.5 py-1 text-xs font-medium text-cyan bg-cyan/10 rounded-md border border-cyan/10" x-text="tag"></span>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== CONTACT SECTION ========== -->
+  <section id="contact" class="relative py-24 md:py-32 px-6 bg-surface/30">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-accent/3 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="max-w-3xl mx-auto relative z-10" x-data="{ shown: false, sent: false }" x-intersect:enter.once="shown = true">
+      <!-- Section header -->
+      <div class="text-center mb-12" x-show="shown" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-[2px] bg-accent"></div>
+          <span class="text-accent text-sm font-semibold tracking-widest uppercase">Contact</span>
+          <div class="w-10 h-[2px] bg-accent"></div>
+        </div>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Let's Work Together</h2>
+        <p class="text-text-secondary max-w-lg mx-auto">Have a project in mind or just want to say hello? I'd love to hear from you. Fill out the form below and I'll get back to you within 24 hours.</p>
+      </div>
+
+      <!-- Contact form -->
+      <div x-show="shown" x-transition:enter="transition ease-out duration-700 delay-200" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
+        <form @submit.prevent="sent = true" class="space-y-6 p-8 md:p-10 rounded-2xl border border-border/50 bg-surface/50 backdrop-blur-sm">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-text-secondary mb-2">Name</label>
+              <input type="text" id="name" placeholder="John Doe" class="w-full px-4 py-3 bg-bg/80 border border-border/50 rounded-xl text-text-primary placeholder-text-secondary/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-300" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-text-secondary mb-2">Email</label>
+              <input type="email" id="email" placeholder="john@example.com" class="w-full px-4 py-3 bg-bg/80 border border-border/50 rounded-xl text-text-primary placeholder-text-secondary/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-300" />
+            </div>
+          </div>
+          <div>
+            <label for="subject" class="block text-sm font-medium text-text-secondary mb-2">Subject</label>
+            <input type="text" id="subject" placeholder="Project Inquiry" class="w-full px-4 py-3 bg-bg/80 border border-border/50 rounded-xl text-text-primary placeholder-text-secondary/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-300" />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-text-secondary mb-2">Message</label>
+            <textarea id="message" rows="5" placeholder="Tell me about your project..." class="w-full px-4 py-3 bg-bg/80 border border-border/50 rounded-xl text-text-primary placeholder-text-secondary/40 focus:border-accent/50 focus:ring-2 focus:ring-accent/20 focus:outline-none transition-all duration-300 resize-none"></textarea>
+          </div>
+          <!-- Submit button -->
+          <button type="submit" x-show="!sent" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-accent hover:bg-accent-glow text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5">
+            <span>Send Message</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+          <!-- Success message -->
+          <div x-show="sent" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span>Thank you! Your message has been sent. I'll get back to you soon.</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Social links -->
+      <div class="flex items-center justify-center gap-4 mt-10" x-show="shown" x-transition:enter="transition ease-out duration-700 delay-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+        <!-- GitHub -->
+        <a href="#" class="group p-3 rounded-xl border border-border/50 bg-surface/30 hover:border-accent/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1" aria-label="GitHub">
+          <svg class="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="#" class="group p-3 rounded-xl border border-border/50 bg-surface/30 hover:border-accent/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1" aria-label="LinkedIn">
+          <svg class="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <!-- Twitter/X -->
+        <a href="#" class="group p-3 rounded-xl border border-border/50 bg-surface/30 hover:border-accent/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1" aria-label="Twitter">
+          <svg class="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <!-- Email -->
+        <a href="mailto:hello@example.com" class="group p-3 rounded-xl border border-border/50 bg-surface/30 hover:border-accent/40 hover:bg-surface-light/30 transition-all duration-300 hover:-translate-y-1" aria-label="Email">
+          <svg class="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-border/50 py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm text-text-secondary">
+        &copy; 2026 <span class="text-text-primary font-medium">Wesson Enriquez</span>. All rights reserved.
+      </p>
+      <p class="text-sm text-text-secondary">
+        Built with
+        <span class="text-accent">Tailwind CSS</span> &amp;
+        <span class="text-cyan">Alpine.js</span>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
